@@ -1,0 +1,6 @@
+apps:
+  - script : ./server/index.js
+    name   : 'server-tenderwatch'
+    interpreter : './node_modules/.bin/babel-node'
+    env    :
+      NODE_ENV: production
