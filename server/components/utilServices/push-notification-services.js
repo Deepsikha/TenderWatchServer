@@ -5,6 +5,8 @@ import User from '../user/user.model';
 import config from '../../config/env';
 import Notification from '../notification/notification.model';
 
+var FCM = require('fcm-push');
+
 const logger = new (Winston.Logger)({
   transports: [
     new (Winston.transports.File)({ filename: 'logs/push-notifications.log' })
@@ -73,20 +75,45 @@ function send(notification, param, local, user) {
   }
   User.get(user)
     .then((founduser) => {
-      if (founduser.deviceId) {
-        if (founduser.deviceId.length > 0) {
-          build(notification, param, founduser._id)
-            .then((notificationPayload) => {
-              apnProvider.send(notificationPayload, founduser.deviceId, (data) => {
-                logger.log('error', `Failed to send Notification to ${founduser.email} with error ${data.failed}`);
-                logger.log('info', `Notification sent to ${founduser.email} with result ${data.sent}`);
-              });
-
-              // apnProvider.shutdown();
-            });
+      if (founduser.deviceId ) {
+          if (founduser.deviceId.length > 0) {
+              build(notification, param, founduser._id)
+                  .then((notificationPayload) => {
+                      apnProvider.send(notificationPayload, founduser.deviceId, (data) => {
+                          logger.log('error', `Failed to send Notification to ${founduser.email} with error ${data.failed}`);
+                          logger.log('info', `Notification sent to ${founduser.email} with result ${data.sent}`);
+                      });
+                      // apnProvider.shutdown();
+                  });
         } else {
           logger.log('warn', `user ${founduser.email} not have assigned deviceId to account.`);
         }
+      }else {
+          logger.log('warn', `user ${founduser.email} not have assigned deviceId to account.`);
+      }
+      if(founduser.androidDeviceId){
+          if (founduser.androidDeviceId.length > 0) {
+              var serverkey = config.firebaseServerKey;
+              var fcm = new FCM(serverkey);
+              var message = {
+                  registration_ids: founduser.androidDeviceId,
+                  notification: {
+                      title: 'TenderWatch',
+                      body: insertParameters(getNotification(notification), param)
+                  }
+              };
+              fcm.send(message, function (err, response) {
+                  if (err) {
+                      console.log("error in push")
+                  } else {
+                      console.log("success")
+                  }
+              });
+          }else {
+              logger.log('warn', `user ${founduser.email} not have assigned deviceId to account.`);
+          }
+      }else {
+          logger.log('warn', `user ${founduser.email} not have assigned deviceId to account.`);
       }
     })
     .catch((err) => {

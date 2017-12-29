@@ -45,5 +45,6 @@ export default {
     cert: './cert_dev.pem',
     production: false
   },
+  firebaseServerKey:'AAAAI8KgRuk:APA91bE0H5Mbm4yeuRT6pOrKO7bbujaJ2g9yQghz31EptD5PxThIyMRnA3NIZAbhVRbqSdei-An-MHM_wcXWXLZoZaLyYuRCvkscYoReeGR96DVsSzSC7PfLHGrIPcjjocRvDBaRXmWK',
   supportId: '5981bc34b5fb605c7406d446'
 };

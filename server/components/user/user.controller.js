@@ -143,21 +143,44 @@ function remove(req, res, next) {
 }
 
 function logout(req, res, next) {
-  User.findOneAndUpdate(
-    {
-      _id: res.locals.session._id,
-      deviceId: req.body.deviceId,
-      role: req.body.role || res.locals.session.role
-    },
-    { $pull: { deviceId: req.body.deviceId } },
-    { upsert: true, new: true }
-  )
-    .exec()
-    .then(() => {
-      res.sendStatus(httpStatus.OK);
-    }).catch(() => {
-      next(new APIError('error while updating the user\'s device list', httpStatus.NOT_MODIFIED, true));
-    });
+    const user = req.user;
+    if(req.body.deviceId != undefined){
+        User.findOneAndUpdate(
+            {
+                _id: res.locals.session._id,
+                role: req.body.role || res.locals.session.role,
+                email: user.email
+            },
+            { $pull: { deviceId: req.body.deviceId } },
+            { upsert: true, new: true }
+        )
+            .exec()
+            .then(() => {
+                res.sendStatus(httpStatus.OK);
+            }).catch(() => {
+            next(new APIError('error while updating the user\'s device list', httpStatus.NOT_MODIFIED, true));
+        });
+    }
+    if(req.body.androidDeviceId != undefined){
+        User.findOneAndUpdate(
+            {
+                _id: res.locals.session._id,
+                role: req.body.role || res.locals.session.role,
+                email: user.email
+            },
+            { $pull: { androidDeviceId: req.body.androidDeviceId } },
+            { upsert: true, new: true }
+        )
+            .exec()
+            .then(() => {
+                res.sendStatus(httpStatus.OK);
+            }).catch(() => {
+            next(new APIError('error while updating the user\'s device list', httpStatus.NOT_MODIFIED, true));
+        });
+    }else{
+        res.json({Message:"Please provide deviceID"})
+    }
+
 }
 
 export default { load, get, getProfile, update, list, remove, changePassword, logout };

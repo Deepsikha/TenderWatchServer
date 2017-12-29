@@ -211,6 +211,7 @@ function update(req, res, next) {
   tender.contactNo = req.body.contactNo || tender.contactNo;
   tender.address = req.body.address || tender.address;
   tender.expiryDate = req.body.expiryDate || tender.expiryDate;
+  tender.city = req.body.city || tender.city;
   // if (req.body.isFollowTender !== undefined) {
   //   tender.isFollowTender = req.body.isFollowTender;
   //   if (typeof tender.isFollowTender === 'string' && tender.isFollowTender === 'true') {
