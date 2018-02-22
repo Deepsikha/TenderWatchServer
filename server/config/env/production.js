@@ -2,9 +2,9 @@ export default {
     env: 'production',
     jwtSecret: '0a6b944d-d2fb-46fc-a85e-0295c986cd9f',
     jwtExpiresIn: '100 days',
-    db: 'mongodb://localhost/tenderwatch',
+    db: 'mongodb://localhost:27017/tenderwatch',
     port: 4000,
-    url: '192.168.200.46',
+    url: '0.0.0.0',
     email: 'tenderwatch01@gmail.com',
     password: 'admin123#',
     apn: {

@@ -30,6 +30,7 @@ if (config.MONGOOSE_DEBUG) {
 if (!module.parent) {
   // listen on port config.port
   app.listen(config.port, config.url, () => {
+    console.log(`server started on port ${config.port} (${config.env}) (${config.url})`);
     debug(`server started on port ${config.port} (${config.env})`);
   });
 }

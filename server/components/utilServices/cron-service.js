@@ -40,7 +40,7 @@ const Cron = {
         .then((tenders) => {
           each(tenders, (tender) => {
             PushNotification.send('client.TenderExpiration', {
-              operation: 'expiration',
+              operation: 'expirationTender',
               tenderName: tender.tenderName,
               dayRemaining: Math.trunc(Math.abs(((new Date()).getTime() - (tender.expiryDate).getTime()) / 36e5 / 24)) //eslint-disable-line
             }, {
@@ -171,7 +171,7 @@ const Cron = {
                        <body>
                           <div style="text-align: center;justify-content: space-around;">
                              <h3>TenderWatch</h3>
-                                <p>You services <b>${catArr.join(', ')}</b> of country <b>${service.countryId.countryName}</b> is going to be expired in <b>${Math.trunc(Math.abs(((service.expiredAt).getTime() - new Date().getTime()) / 36e5 / 24))}</b> days </p>
+                                <p>You services <b>${catArr.join(', ')}</b> of country <b>${service.countryId.countryName}</b> is going to be expired in <b>${Math.trunc(Math.abs(((service.expiredAt).getTime() - new Date().getTime()) / 36e5 / 24))}</b> days only. Renew your subscription to avoid disruption of service. </p>
                           </div>
                         </body>
                       </html>`
@@ -186,6 +186,7 @@ const Cron = {
             });
 
             PushNotification.send('Service.expiration', {
+              operation: 'expirationService',
               serviceName: service.countryId.countryName,
               days: Math.trunc(Math.abs(((service.expiredAt).getTime() - new Date().getTime()) / 36e5 / 24)) //eslint-disable-line
             }, null, service.userId._id);

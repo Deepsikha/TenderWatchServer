@@ -5,9 +5,9 @@ export default {
   jwtExpiresIn: '100 days',
   email: 'tenderwatch01@gmail.com',
   password: 'admin123#',
-  db: 'mongodb://localhost/tenderwatch',
+  db: 'mongodb://localhost:27017/tenderwatch',
   port: 4000,
-  url: '192.168.200.46',
+  url: '0.0.0.0',
   cloudFrontAccessKey: 'APKAJQGNVMK3YNPOA4HQ',
   cloudFront_key: '-----BEGIN RSA PRIVATE KEY-----\n' +
   'MIIEowIBAAKCAQEAoRiayuc2FEatBNZZfBvOWKt1pdGQm7ntBeDQrAxtFXDa/3nz\n' +
@@ -25,7 +25,7 @@ export default {
   'PeyPb4YceU8uLFdRlc9ZGMmfyuiHuyMksWvF03h/qGcRoRDgRFO935i2S9UxsVoN\n' +
   'kDPet473Qs96+55ok1GPh7SQw0hpz3s2fambXk4fmD8kWUeZxX9ZIasCgYEAoikN\n' +
   'fetYIYvLUyFv3hDZ73CgUZOafEPhHF242Eg9lBRr0SNY+J9YZzRteblxn3xK4tLv\n' +
-  'MU/wPqRZI99g3+ebWfFrcjXGshay7XqKf3+j3mRgXY/nPtBGW5/2KRDFfmcALNyI\n' +
+  'MU/wPqRZ`I99g3+ebWfFrcjXGshay7XqKf3+j3mRgXY/nPtBGW5/2KRDFfmcALNyI\n' +
   'FegsCUmQV4OzTCZSLJYAdDPynZdvfRe18EM/X4kCgYAvsClhLV7KXA9bug4ivHLK\n' +
   't2KK/yiHQMRYP+fW3vAr3CEEHrXFzmjE19P5pJs4QBm3ZNQ+lDfvxvb4tGunMqrR\n' +
   'vhTFV6YQbOtIWYLELTPAdsFQLPT5fZpnfOJ5ZwyEcaVtA0I2xad1We1/QNfeeQs5\n' +

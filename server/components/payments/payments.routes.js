@@ -23,4 +23,8 @@ router.route('/direct/charges')
 /** POST api/payments/charges - charge customer using card */
   .post(paymentsCtrl.directCardPayment);
 
+
+router.route('/bank/android/charges')
+/** POST api/payments/charges - charge customer using card */
+    .post(paymentsCtrl.createBankAccount);
 export default router;
