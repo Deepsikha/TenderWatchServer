@@ -8,6 +8,8 @@ const logger = new (Winston.Logger)({
     ]
 });
 const stripe = require('stripe')('sk_test_B40bvBCus9RftZLEveSP0eSj');
+const plaid = require('plaid');
+
 
 function getEphemeralKeys(req, res) {
     if (!req.body.api_version) {
@@ -50,6 +52,20 @@ function chargeCustomer(req, res) {
 }
 
 function bankPayment(req, res) {
+    /*const plaidClient = new plaid.Client('59b78aab4e95b8200d062432',
+        '330b291a64526316b3570ec752e487',
+        '867ee512c690fdc157863aeb060234',
+        plaid.environments.sandbox);
+    plaidClient.exchangePublicToken(req.body.plaid_token,(err,response)=>{
+        if(err) console.log(err);
+        console.log('==================================================================plaid response:',response);
+        plaidClient.createStripeToken(response.access_token,'yL8je73GrjTZogRqZLrLHLaX3Kb8a1s5z6Jlg', (err1, res1) => {
+            //const bankAccountToken = res1.stripe_bank_account_token;
+            console.log('=============================================================',err1);
+            console.log('=============================================================',res1);
+            //res.send(bankAccountToken);
+        });
+    });*/
     User.findOne({email: res.locals.session.email, role: res.locals.session.role})
         .then((user) => {
             const CustomerStripeid = user.stripeDetails.id;
@@ -63,7 +79,7 @@ function bankPayment(req, res) {
                     description: `Charge for ${user.email}`
                 })
                     .then(() => {
-                        logger.log('charge', `Succesfully Charge from ${user.email} in Stripe`);
+                        logger.log('charge', `Successfully Charge from ${user.email} in Stripe`);
                         res.status(httpStatus.OK).send({message: 'success'});
                     })
                     .catch((err) => {
@@ -87,7 +103,7 @@ function bankPayment(req, res) {
                             });
                     })
                     .catch((err) => {
-                        consolle.log(err);
+                        console.log(err);
                         res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: 'can not create bank account'});
                     });
             }
@@ -175,18 +191,20 @@ function createBankAccount(req, res) {
                                 bankAccId,
                                 data)
                                 .then(() => {
-                                    res.status(httpStatus.OK).send({message: 'Source Create Succesfully'});
+                                    res.status(httpStatus.OK).send({message: `Source Create Succesfully ${bankAccId}`});
                                 })
-                                .catch(() => {
-                                    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: 'Source Create Succesfully'});
+                                .catch((err) => {
+                                    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: `Source Create Successfully but ${err.message}`});
                                 });
                         })
                         .catch((err) => {
-                            res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: 'can not create bank account'});
+                            console.log(err.message);
+                            res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
                         });
                 })
                 .catch ((err) => {
-                    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: 'can not create bank account'});
+                console.log(err.message);
+                    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: err.message});
                 })
 
         })

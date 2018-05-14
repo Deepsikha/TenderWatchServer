@@ -78,18 +78,22 @@ function getProfile(req, res, next) {
  * @returns {User}
  */
 function update(req, res, next) {
+    console.log('req.body:',req.file);
+    console.log('req.body:',req.body);
   const userDate = req.user;
-
+    console.log(req.user);
   let imageName;
   if (req.file) {
     imageName = `image_${req.file.key.split('image_')[1]}`;
   }
 
-  userDate.profilePhoto = imageName || `image_${userDate.profilePhoto.split('image_')[1]}`;
+  userDate.profilePhoto = imageName || userDate.profilePhoto;
   userDate.country = req.body.country || userDate.country;
   userDate.contactNo = req.body.contactNo || userDate.contactNo;
   userDate.occupation = req.body.occupation || userDate.occupation;
   userDate.aboutMe = req.body.aboutMe || userDate.aboutMe;
+  userDate.firstName = req.body.firstName || userDate.firstName;
+  userDate.lastName = req.body.lastName || userDate.lastName;
 
   userDate.save()
     .then((savedUser) => {
@@ -97,7 +101,7 @@ function update(req, res, next) {
       user.profilePhoto = user.profilePhoto ? `${config.s3_url}/profileimages/${user.profilePhoto}` : 'no image';
       res.json(user);
     })
-    .catch(e => next(e));
+    .catch(e => {console.log(e);next(e)});
 }
 
 function changePassword(req, res) {
@@ -144,6 +148,7 @@ function remove(req, res, next) {
 
 function logout(req, res, next) {
     const user = req.user;
+    console.log(req.body);
     if(req.body.deviceId != undefined){
         User.findOneAndUpdate(
             {
@@ -161,7 +166,7 @@ function logout(req, res, next) {
             next(new APIError('error while updating the user\'s device list', httpStatus.NOT_MODIFIED, true));
         });
     }
-    if(req.body.androidDeviceId != undefined){
+    else if(req.body.androidDeviceId != undefined){
         User.findOneAndUpdate(
             {
                 _id: res.locals.session._id,

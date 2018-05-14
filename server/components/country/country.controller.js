@@ -67,6 +67,7 @@ function update(req, res, next) {
  * @returns {Country[]}
  */
 function list(req, res, next) {
+console.log('in con');
   Country.list()
     .then(countries => res.json(countries))
     .catch(e => next(e));

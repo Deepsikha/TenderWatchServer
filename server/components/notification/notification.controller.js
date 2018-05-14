@@ -74,6 +74,7 @@ function remove(req, res, next) {
   //     return res.json(new APIError('cannot mark notification as read', httpStatus.NOT_MODIFIED));
   //   })
   //   .catch(e => next(new APIError(e.message, httpStatus.INTERNAL_SERVER_ERROR)));
+    console.log(req.body.notification);
   Notification.remove({ _id: { $in: req.body.notification } })
     .exec()
     .then(() => res.sendStatus(httpStatus.ACCEPTED))

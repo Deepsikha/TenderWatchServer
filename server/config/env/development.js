@@ -7,7 +7,7 @@ export default {
   password: 'admin123#',
   db: 'mongodb://localhost:27017/tenderwatch',
   port: 4000,
-  url: '0.0.0.0',
+  url: '192.168.200.63',
   cloudFrontAccessKey: 'APKAJQGNVMK3YNPOA4HQ',
   cloudFront_key: '-----BEGIN RSA PRIVATE KEY-----\n' +
   'MIIEowIBAAKCAQEAoRiayuc2FEatBNZZfBvOWKt1pdGQm7ntBeDQrAxtFXDa/3nz\n' +
@@ -40,6 +40,7 @@ export default {
   s3_url: 'https://s3.ap-south-1.amazonaws.com/tenderwatch',
   //googleAuthClient: '153589139177-l8sv2dg83p34nh4t07ebbvegv100p1fj.apps.googleusercontent.com',
   googleAuthClient: '153589139177-93tafh9qdejtgglpecn95e3u5i30rog5.apps.googleusercontent.com',
+    googleAuthClientAndroid:'153589139177-5k2g5pv0088mgaoob6t3jp5pvm2oqori.apps.googleusercontent.com',
   apn: {
     key: './key_dev.pem',
     cert: './cert_dev.pem',

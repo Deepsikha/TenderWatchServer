@@ -80,7 +80,7 @@ const TenderSchema = new mongoose.Schema({
   interested: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   amendRead: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   subscriber: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null }
-});
+},{usePushEach:true});
 
 /**
  * - pre-post-save hooks

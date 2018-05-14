@@ -41,7 +41,7 @@ router.use('/api/country', countryRoutes);
 // mount category routes at /api/category
 router.use('/api/category', categoryRoutes);
 
-// mount service routes at /api/service
+// mount service routes at /api/
 router.use('/api/service', serviceRoutes);
 
 // mount tender routes at /api/tender

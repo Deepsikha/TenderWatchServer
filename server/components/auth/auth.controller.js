@@ -30,7 +30,7 @@ const auth = new Google();
  */
 /**
  *  Returns jwt token and user details if valid email and password are provided
- * @property {string} req.body.email - The email of user.
+ * @property {string} ```````````````````````````````````````````````.body.email - The email of user.
  * @property {string} req.body.password - The password of user.
  * @returns {token, User}
  */
@@ -91,11 +91,13 @@ function login(req, res, next) {
             googleAuthClient = config.googleAuthClientAndroid
         }
 
-        authClient.verifyIdToken(req.body.token, config.googleAuthClient, (err, checkLogin) => {
+        authClient.verifyIdToken(req.body.token, googleAuthClient, (err, checkLogin) => {
+            console.log(checkLogin);
             const email = checkLogin.getPayload().email;
+            console.log('email:',email);
             User.getByEmailRole(email, req.body.role)
                 .then((foundUser) => {
-                    console.log(foundUser)
+                    console.log(foundUser);
                     if (foundUser) {
                         if (foundUser.role !== req.body.role) {
                             return next(new APIError('User role do not match', httpStatus.UNAUTHORIZED));
@@ -127,7 +129,7 @@ function login(req, res, next) {
                     return res.status(404).send({ errorType: 'NoUserAvailable', errorMessage: 'User is not registered in app' });
                 })
                 .catch((err1) => {
-                    console.log(err1.toString())
+                    console.log('error in google:',err1.toString());
                     const errorGmail = new APIError(err1.message, httpStatus.BAD_REQUEST);
                     return next(errorGmail);
                 });
@@ -243,7 +245,8 @@ function login(req, res, next) {
  * @returns {User}
  */
 function register(req, res, next) {
-
+    console.log('file',req.file);
+    console.log('reg:',req.body);
     let user = new User(req.body);
     const userSelection = req.body;
 

@@ -79,8 +79,9 @@
     "nodeice": "^3.0.7",
     "nodemailer": "^4.0.1",
     "path": "^0.12.7",
+    "plaid": "^2.4.1",
     "request": "^2.81.0",
-    "stripe": "^4.24.1",
+    "stripe": "^4.25.0",
     "useragent": "2.2.1",
     "winston": "^2.3.1"
   },

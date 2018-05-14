@@ -20,6 +20,8 @@ const upload = multer({
     location: 'tenderimages/',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     metadata(req, file, cb) {
+      console.log('multer,req:',req.headers);
+      console.log('multer:',file);
       cb(null, { fieldName: file.fieldname });
     },
     key(req, file, cb) {
@@ -92,7 +94,7 @@ router.route('/:tenderId')
   .delete(tenderCtrl.remove);
 
 router.route('/interested/:tenderId')
-  /** PUT /api/tender/interested/:tenderId - add contractor intereste in tender */
+  /** PUT /api/tender/interested/:tenderId - add contractor interest in tender */
   .put(authHelper.hasRole('contractor'), tenderCtrl.addInterested);
 
 /** Load tender when API with tenderId route parameter is hit */

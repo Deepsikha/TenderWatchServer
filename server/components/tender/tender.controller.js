@@ -26,6 +26,7 @@ function load(req, res, next, id) { // eslint-disable-line
  * @returns {Tender}
  */
 function get(req, res, next) {
+  console.log(req.tender);
   if (res.locals.session.role === 'client') {
     if (res.locals.session._id === req.tender.tenderUploader._id.toString()) {
       req.tender.tenderUploader = req.tender.tenderUploader.safeTenderUploaderModel();
@@ -166,6 +167,8 @@ function getTenders(req, res) { // eslint-disable-line
  * @returns {Tender}
  */
 function create(req, res, next) {
+  console.log('req.body',req.body);
+  console.log('file:',req.file);
   const tender = new Tender(req.body);
   tender.amendRead = null;
   tender.tenderUploader = res.locals.session._id;
@@ -220,7 +223,7 @@ function update(req, res, next) {
   //     tender.isFollowTender = false;
   //   }
   // }
-  tender.isFollowTender = req.body.isFollowTender;
+  tender.isFollowTender = req.body.isFollowTender || tender.isFollowTender;
   tender.amendRead = [];
   //eslint-disable-next-line
   tender.tenderPhoto = req.file ? `image_${req.file.key.split('image_')[1]}` : tender.tenderPhoto;
@@ -245,7 +248,7 @@ function update(req, res, next) {
         savedTender.tenderPhoto = savedTender.tenderPhoto ? `${config.s3_url}/tenderimages/${tender.tenderPhoto}` : 'no image';
         res.json(savedTender);
       })
-      .catch(e => next(new APIError(e.message, httpStatus.CONFLICT, true)));
+      .catch(e => {console.log(e);next(new APIError(e.message, httpStatus.CONFLICT, true))});
 }
 
 /**
@@ -387,9 +390,9 @@ function addInterested(req, res, next) {
         }, updatedTender.tenderUploader);
         res.sendStatus(httpStatus.OK);
       })
-      .catch(err => next(new APIError(err.message, httpStatus.INTERNAL_SERVER_ERROR, true)));
+      .catch(err =>{ console.log(err); next(new APIError(err.message, httpStatus.INTERNAL_SERVER_ERROR, true))});
   }
-  return next(new APIError('you are already interested in tender', httpStatus.NOT_MODIFIED, true));
+    return next(new APIError('you are already interested in tender', httpStatus.NOT_MODIFIED, true));
 }
 
 export default {

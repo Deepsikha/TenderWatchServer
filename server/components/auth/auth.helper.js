@@ -8,7 +8,7 @@ function hasRole(roles) {
     }
 
     if (!roles.includes(user.role)) {
-      return res.status(HTTPStatus.FORBIDDEN).send({ message: 'You are not authorized to 0perform this request' });
+      return res.status(HTTPStatus.FORBIDDEN).send({ message: 'You are not authorized to perform this request' });
     }
 
     return next();
