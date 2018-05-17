@@ -7,7 +7,7 @@ export default {
   password: 'admin123#',
   db: 'mongodb+srv://tenderwatch-admin:tenderwatch-admin@cluster0-ult4e.mongodb.net/tenderwatch?retryWrites=true/',
   port: process.env.PORT || 4000,
-  url: '192.168.200.63',
+  url: '0.0.0.0',
   cloudFrontAccessKey: 'APKAJQGNVMK3YNPOA4HQ',
   cloudFront_key: '-----BEGIN RSA PRIVATE KEY-----\n' +
   'MIIEowIBAAKCAQEAoRiayuc2FEatBNZZfBvOWKt1pdGQm7ntBeDQrAxtFXDa/3nz\n' +
