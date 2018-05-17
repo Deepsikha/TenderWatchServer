@@ -63,7 +63,6 @@ function sendSupportMail(req, res, next) {
             pass: req.body.password || config.password
         }
     });
-    console.log(req.body);
     const mail = {
         from: `support ${req.body.email} <${req.body.email}>`,
         cc: ['tenderwatch01@gmail.com'],

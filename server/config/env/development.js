@@ -5,8 +5,8 @@ export default {
   jwtExpiresIn: '100 days',
   email: 'tenderwatch01@gmail.com',
   password: 'admin123#',
-  db: 'mongodb://localhost:27017/tenderwatch',
-  port: 4000,
+  db: 'mongodb+srv://tenderwatch-admin:tenderwatch-admin@cluster0-ult4e.mongodb.net/tenderwatch?retryWrites=true/',
+  port: process.env.PORT || 4000,
   url: '192.168.200.63',
   cloudFrontAccessKey: 'APKAJQGNVMK3YNPOA4HQ',
   cloudFront_key: '-----BEGIN RSA PRIVATE KEY-----\n' +
@@ -47,5 +47,15 @@ export default {
     production: false
   },
   firebaseServerKey:'AAAAI8KgRuk:APA91bE0H5Mbm4yeuRT6pOrKO7bbujaJ2g9yQghz31EptD5PxThIyMRnA3NIZAbhVRbqSdei-An-MHM_wcXWXLZoZaLyYuRCvkscYoReeGR96DVsSzSC7PfLHGrIPcjjocRvDBaRXmWK',
-  supportId: '5981bc34b5fb605c7406d446'
+  supportId: '5981bc34b5fb605c7406d446',
+    pesapalSandbox:{
+        consumerKey: 'rjO83+33LUwtRsT8yZkTE+pfGdVU6ncW',
+        consumerSecret: '5PlAfX6KCMbX5xsBg1lNO4+NE0o=',
+        testing: true
+    },
+    pesapalconfig:{
+        consumerKey: 'LkvAFJD5BOQdZvM+o8RlwN74j/pVEMJF',
+        consumerSecret: '3pkDxRYW4M8m3Ofl9SsUzgoPmAQ=',
+        testing: false
+    }
 };

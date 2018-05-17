@@ -23,6 +23,12 @@ router.route('/direct/charges')
 /** POST api/payments/charges - charge customer using card */
   .post(paymentsCtrl.directCardPayment);
 
+router.route('/pesapal').post(paymentsCtrl.pesapalURL);
+/** POST api/payments/pesapal - get the direct payment url */
+
+router.route('/pesapal/details').post(paymentsCtrl.pesapalDetails);
+/** POST api/payments/pesapal/details - get the details of payments url */
+
 
 router.route('/bank/android/charges')
 /** POST api/payments/charges - charge customer using card */

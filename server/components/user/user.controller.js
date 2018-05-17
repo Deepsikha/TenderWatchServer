@@ -78,10 +78,7 @@ function getProfile(req, res, next) {
  * @returns {User}
  */
 function update(req, res, next) {
-    console.log('req.body:',req.file);
-    console.log('req.body:',req.body);
   const userDate = req.user;
-    console.log(req.user);
   let imageName;
   if (req.file) {
     imageName = `image_${req.file.key.split('image_')[1]}`;
@@ -148,7 +145,6 @@ function remove(req, res, next) {
 
 function logout(req, res, next) {
     const user = req.user;
-    console.log(req.body);
     if(req.body.deviceId != undefined){
         User.findOneAndUpdate(
             {

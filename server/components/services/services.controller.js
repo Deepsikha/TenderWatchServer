@@ -149,7 +149,6 @@ function updateUserServices(req, res, next) {
         }
         foundUser.save()
           .then((user) => {
-            console.log(foundUser);
             const newServices = [];
             each(req.body.selections, (value, key) => {
               const CurrentDate = new Date();
@@ -176,7 +175,6 @@ function updateUserServices(req, res, next) {
                     let tasks = [];
                     if (services.length > 0) {
                       tasks = services.map((service) => {
-                        console.log('service : ',service);
                         const dict = {};
                         const catArr = [];
                         const categories = service.categoryId.map(category => { //eslint-disable-line

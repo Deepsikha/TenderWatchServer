@@ -20,8 +20,6 @@ const upload = multer({
     location: 'tenderimages/',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     metadata(req, file, cb) {
-      console.log('multer,req:',req.headers);
-      console.log('multer:',file);
       cb(null, { fieldName: file.fieldname });
     },
     key(req, file, cb) {

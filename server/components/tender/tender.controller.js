@@ -26,7 +26,6 @@ function load(req, res, next, id) { // eslint-disable-line
  * @returns {Tender}
  */
 function get(req, res, next) {
-  console.log(req.tender);
   if (res.locals.session.role === 'client') {
     if (res.locals.session._id === req.tender.tenderUploader._id.toString()) {
       req.tender.tenderUploader = req.tender.tenderUploader.safeTenderUploaderModel();
@@ -167,8 +166,6 @@ function getTenders(req, res) { // eslint-disable-line
  * @returns {Tender}
  */
 function create(req, res, next) {
-  console.log('req.body',req.body);
-  console.log('file:',req.file);
   const tender = new Tender(req.body);
   tender.amendRead = null;
   tender.tenderUploader = res.locals.session._id;

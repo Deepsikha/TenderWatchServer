@@ -21,7 +21,6 @@ const upload = multer({
             cb(null, { fieldName: file.fieldname });
         },
         key(req, file, cb) {
-            console.log(file);
             let ext = '';
             switch (file.mimetype) {
                 case 'image/jpeg' :

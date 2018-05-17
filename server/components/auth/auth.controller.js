@@ -245,8 +245,6 @@ function login(req, res, next) {
  * @returns {User}
  */
 function register(req, res, next) {
-    console.log('file',req.file);
-    console.log('reg:',req.body);
     let user = new User(req.body);
     const userSelection = req.body;
 

@@ -1,6 +1,7 @@
 import Winston from 'winston';
 import User from '../user/user.model';
 import httpStatus from '../../../node_modules/http-status';
+import config from '../../config/env';
 
 const logger = new (Winston.Logger)({
     transports: [
@@ -8,7 +9,7 @@ const logger = new (Winston.Logger)({
     ]
 });
 const stripe = require('stripe')('sk_test_B40bvBCus9RftZLEveSP0eSj');
-const plaid = require('plaid');
+const pesapal = require('pesapal')(config.pesapalSandbox);
 
 
 function getEphemeralKeys(req, res) {
@@ -52,20 +53,6 @@ function chargeCustomer(req, res) {
 }
 
 function bankPayment(req, res) {
-    /*const plaidClient = new plaid.Client('59b78aab4e95b8200d062432',
-        '330b291a64526316b3570ec752e487',
-        '867ee512c690fdc157863aeb060234',
-        plaid.environments.sandbox);
-    plaidClient.exchangePublicToken(req.body.plaid_token,(err,response)=>{
-        if(err) console.log(err);
-        console.log('==================================================================plaid response:',response);
-        plaidClient.createStripeToken(response.access_token,'yL8je73GrjTZogRqZLrLHLaX3Kb8a1s5z6Jlg', (err1, res1) => {
-            //const bankAccountToken = res1.stripe_bank_account_token;
-            console.log('=============================================================',err1);
-            console.log('=============================================================',res1);
-            //res.send(bankAccountToken);
-        });
-    });*/
     User.findOne({email: res.locals.session.email, role: res.locals.session.role})
         .then((user) => {
             const CustomerStripeid = user.stripeDetails.id;
@@ -104,7 +91,7 @@ function bankPayment(req, res) {
                     })
                     .catch((err) => {
                         console.log(err);
-                        res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: 'can not create bank account'});
+                        res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: `can not create bank account ${err}`});
                     });
             }
         })
@@ -190,8 +177,8 @@ function createBankAccount(req, res) {
                                 CustomerStripeid,
                                 bankAccId,
                                 data)
-                                .then(() => {
-                                    res.status(httpStatus.OK).send({message: `Source Create Succesfully ${bankAccId}`});
+                                .then((response) => {
+                                    res.status(httpStatus.OK).send({message: `Source Create Succesfully`,bankAcc:response});
                                 })
                                 .catch((err) => {
                                     res.status(httpStatus.INTERNAL_SERVER_ERROR).send({message: `Source Create Successfully but ${err.message}`});
@@ -213,6 +200,26 @@ function createBankAccount(req, res) {
         });
 }
 
+const pesapalURL = (req,res) => {
+    const postParams = {
+        'oauth_callback': 'http://local.tender.io:3000/subscription'
+    };
+    const requestData = {
+        'Amount': 1,
+        'Description': req.body.desc,
+        'Type': 'MERCHANT',
+        'Reference': '12erwe',
+        'Email': 'tenderwatch01@gmail.com'
+    };
+    res.send({URL:pesapal.postDirectOrder(postParams, requestData)});
+
+};
+
+const pesapalDetails = (req,res) => {
+    const URL = pesapal.queryPaymentStatus(req.body);
+    res.send({URL});
+};
+
 export default {
     getEphemeralKeys,
     chargeCustomer,
@@ -220,5 +227,7 @@ export default {
     listBankAcc,
     dltBankAccount,
     directCardPayment,
-    createBankAccount
+    createBankAccount,
+    pesapalURL,
+    pesapalDetails
 };

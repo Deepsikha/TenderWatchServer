@@ -14,7 +14,8 @@ mongoose.Promise = Promise;
 
 // connect to mongo db
 mongoose.connect(config.db, { server: { socketOptions: { keepAlive: 1 } } });
-mongoose.connection.on('error', () => {
+mongoose.connection.on('error', (err) => {
+  console.log(err);
   throw new Error(`unable to connect to database: ${config.db}`);
 });
 

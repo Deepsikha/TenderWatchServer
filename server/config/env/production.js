@@ -2,8 +2,8 @@ export default {
     env: 'production',
     jwtSecret: '0a6b944d-d2fb-46fc-a85e-0295c986cd9f',
     jwtExpiresIn: '100 days',
-    db: 'mongodb://localhost:27017/tenderwatch',
-    port: 4000,
+    db: 'mongodb+srv://tenderwatch-admin:tenderwatch-admin@cluster0-ult4e.mongodb.net/tenderwatch?retryWrites=true/',
+    port: process.env.PORT || 4000,
     url: '0.0.0.0',
     email: 'tenderwatch01@gmail.com',
     password: 'admin123#',
@@ -47,5 +47,15 @@ export default {
     s3_url: 'https://s3.ap-south-1.amazonaws.com/tenderwatch',
     //googleAuthClient: '153589139177-l8sv2dg83p34nh4t07ebbvegv100p1fj.apps.googleusercontent.com',
     googleAuthClient: '153589139177-93tafh9qdejtgglpecn95e3u5i30rog5.apps.googleusercontent.com',
-    supportId: '5981bc34b5fb605c7406d446'
+    supportId: '5981bc34b5fb605c7406d446'.length,
+    pesapalSandbox:{
+        consumerKey: 'rjO83+33LUwtRsT8yZkTE+pfGdVU6ncW',
+        consumerSecret: '5PlAfX6KCMbX5xsBg1lNO4+NE0o=',
+        testing: true
+    },
+    pesapalconfig:{
+        consumerKey: 'LkvAFJD5BOQdZvM+o8RlwN74j/pVEMJF',
+        consumerSecret: '3pkDxRYW4M8m3Ofl9SsUzgoPmAQ=',
+        testing: false
+    }
 };
