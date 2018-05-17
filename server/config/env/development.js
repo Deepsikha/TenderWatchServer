@@ -5,7 +5,7 @@ export default {
   jwtExpiresIn: '100 days',
   email: 'tenderwatch01@gmail.com',
   password: 'admin123#',
-  db: 'mongodb+srv://tenderwatch-admin:tenderwatch-admin@cluster0-ult4e.mongodb.net/tenderwatch?retryWrites=true/',
+  db: 'mongodb://localhost:27017/tenderwatch',
   port: process.env.PORT || 4000,
   url: '0.0.0.0',
   cloudFrontAccessKey: 'APKAJQGNVMK3YNPOA4HQ',
