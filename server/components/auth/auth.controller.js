@@ -144,6 +144,7 @@ function login(req, res, next) {
 
         request(facebookReq, (error, response, body) => {
             if (!error && response.statusCode === 200) {
+                console.log(body);
                 const info = JSON.parse(body);
                 User.getByEmailRole(info.email, req.body.role)
                     .then((foundUser) => {

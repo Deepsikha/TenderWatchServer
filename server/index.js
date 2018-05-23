@@ -13,7 +13,12 @@ Promise = require('bluebird'); // eslint-disable-line no-global-assign
 mongoose.Promise = Promise;
 
 // connect to mongo db
-mongoose.connect(config.db, { server: { socketOptions: { keepAlive: 1 } } });
+const options = {
+    socketTimeoutMS: 30000,
+    keepAlive: true,
+    reconnectTries: 30000
+};
+mongoose.connect(config.db, options);
 mongoose.connection.on('error', (err) => {
   console.log(err);
   throw new Error(`unable to connect to database: ${config.db}`);
